@@ -7,19 +7,26 @@ typedef struct {
     int y;
 } Point;
 
-void performComplexCalculation(Point* point, int iterations) {
+typedef struct {
+    int a;
+    int b;
+    int c;
+} ComplexValues;
+
+void performComplexCalculation(Point* point, int iterations, ComplexValues* complexValues) {
     for (int i = 0; i < iterations; ++i) {
-        point->x = point->x * point->x - point->y * point->y + 2;
-        point->y = 2 * point->x * point->y + 3;
+        point->x = point->x * complexValues->a - point->y * complexValues->b + complexValues->c;
+        point->y = complexValues->a * point->x * point->y + complexValues->b * point->y + complexValues->c;
     }
 }
 
 int main() {
     Point complexPoint = {1, 1};
+    ComplexValues complexValues = {2, 3, 4};
     int totalIterations = 0;
 
     while (totalIterations < MAX_ITERATIONS) {
-        performComplexCalculation(&complexPoint, totalIterations);
+        performComplexCalculation(&complexPoint, totalIterations, &complexValues);
         if (complexPoint.x * complexPoint.x + complexPoint.y * complexPoint.y > 1000) {
             break;
         }
